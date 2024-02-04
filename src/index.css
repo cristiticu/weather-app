@@ -1,0 +1,9 @@
+.weather-list {
+    list-style: none;
+    position:absolute;
+}
+
+.weather-data {
+    display: flex;
+    align-items: center;
+}
