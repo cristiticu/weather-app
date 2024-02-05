@@ -1,0 +1,14 @@
+.section {
+    display: inline-block;
+    box-sizing: border-box;
+
+    border-color: rgb(41, 41, 41);
+    border-radius: 10px;
+    border-style: solid;
+    border-width: thick;
+
+    padding: 24px;
+
+    font-size: 1.2em;
+    color:rgb(52, 52, 52)
+}
