@@ -19,31 +19,39 @@
 }
 
 .search-bar {
-    margin-right: 10vw;
-    padding-right: 10vw;
+    margin-left: 7vw;
 
-    font-size: 1.3em;
+    width: 100%;
+
+    font-size: 1.5em;
 }
 
 .suggestions {
     box-sizing: border-box;
     position: absolute;
-    left: 0%;
+
+    left: 7vw;
 
     padding: 4px;
     margin-top: 1px;
     border-radius: 4px;
 
     background-color: rgb(41, 41, 41);
-
-    color: #e2ddd7;
 }
 
 .suggestion {
     padding: 2px;
     margin: 2px;
+
+    font-size: 1.7em;
+
+    background-color:#e2ddd7;
+    color: rgb(41, 41, 41);
+
+    border-radius: 2px;
     
     appearance: none;
+    -webkit-appearance: none; 
 }
 
 .suggestions ul {
@@ -58,15 +66,21 @@
 
     .title {
         padding-left: 4vw;
-        margin-right: 40vw;
+        margin-right: 39.5vw;
 
         font-size: 4em;
     }
 
     .search-bar {
-        margin-right: 1vw;
-        padding: 0;
-
         font-size: 1.1em;
+        margin-left: 0;
+    }
+
+    .suggestions {
+        left: 0%;
+    }
+
+    .suggestion {
+        font-size: 1.2em;
     }
 }

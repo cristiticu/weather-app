@@ -45,13 +45,13 @@ export default function Navbar({ onCitySubmitted }){
             <span className="title unselectable">weather.net</span>
             <div className="search-wrapper">
                 <input className="search-bar" type="search" placeholder="search your city" onChange={(e) => handleCityChanged(e)} />
-                {suggestions && 
+                {suggestions &&
                 <div className="suggestions">
                     <ul>
                         {suggestions.map((suggestion, index) => {
                             if(suggestion)
                                 return (<li key={index}>
-                                        <button className="suggestion" value={suggestion + index.toString()} onClick={(e) => onCitySubmitted(e)}>{suggestion}</button>
+                                        <button className="suggestion" value={suggestion} onClick={(e) => {onCitySubmitted(e);setSuggestions(null);}}>{suggestion}</button>
                                         </li>);
                         })}
                     </ul>
