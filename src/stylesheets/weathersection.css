@@ -1,5 +1,8 @@
 .weather-list {
     list-style: none;
+    
+    padding-top: 12px;
+    padding-left: 28px;
 }
 
 .weather-data {
@@ -10,3 +13,4 @@
 .important-data {
     font-size: 3em;
 }
+

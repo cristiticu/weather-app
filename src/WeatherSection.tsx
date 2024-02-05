@@ -40,7 +40,7 @@ export default function WeatherSection({ weatherData }): JSX.Element{
                     feels like {Math.round(weatherData.main.feels_like)}°, {weatherData.weather[0].description}
                 </li>
                 <li className="weather-data">
-                    {windSpeedDescriptions[windSpeedIndex]} from {windAngles[windAngleIndex]} at {windSpeed} km/h,
+                    {windSpeedDescriptions[windSpeedIndex]} from {windAngles[windAngleIndex]} at {Math.round(windSpeed)} km/h
                 </li>
                 <li className="weather-data">
                     {weatherData.main.humidity}% humidity
