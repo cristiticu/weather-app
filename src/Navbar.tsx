@@ -3,10 +3,12 @@ import './stylesheets/navbar.css'
 import { useState } from 'react';
 
 
+//const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=cluj-napoca&fuzzy=0.7&maxRows=4&username=nicko454g&featureClass=P');
+const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=suce&fuzzy=0.7&maxRows=4&username=nicko454g&featureCode=PPLA&featureCode=PPLA2&featureCode=PPLC&featureCode=PPLS&featureCode=PPL');
+//const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=suce&fuzzy=0.7&maxRows=4&username=nicko454g&featureCode=PPL');
+
 function getSuggestions(search: string): string[] | null {
-    if(search.length >= 3)
-        return [search, search, search];
-    return null;
+    return [search, search, search];
 }
 
 
@@ -34,11 +36,23 @@ export default function Navbar({ onCitySubmitted }){
     const [suggestions, setSuggestions] = useState(null);
 
     const handleCityChanged = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+        citySuggestionsURL.searchParams.set('q', e.target.value);
         if(e.target.value.length >= 3)
-            setSuggestions(getSuggestions(e.target.value)); // <-- replace with useEffect here?
+            fetch(citySuggestionsURL.toString())
+            .then((response) => response.json()
+            .then((newSuggestions) => {
+                setSuggestions(newSuggestions.geonames.map(newSuggestion => {
+                    return {name: newSuggestion.name, country: newSuggestion.countryName, coords: {lat: Number.parseFloat(newSuggestion.lat), long: Number.parseFloat(newSuggestion.lng)}};
+                }));
+            }));
         else
             setSuggestions(null);
     }, 600);
+
+    function handleCitySubmit(e){
+        onCitySubmitted(suggestions[e.target.value].name);
+        setSuggestions(null);
+    }
     
     return (
         <div className="navbar">
@@ -51,7 +65,7 @@ export default function Navbar({ onCitySubmitted }){
                         {suggestions.map((suggestion, index) => {
                             if(suggestion)
                                 return (<li key={index}>
-                                        <button className="suggestion" value={suggestion} onClick={(e) => {onCitySubmitted(e);setSuggestions(null);}}>{suggestion}</button>
+                                        <button className="suggestion" value={index} onClick={(e) => handleCitySubmit(e)}>{suggestion.name + ', ' + suggestion.country}</button>
                                         </li>);
                         })}
                     </ul>

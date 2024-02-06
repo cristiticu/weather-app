@@ -6,6 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "build": "npx parcel build ./src/index.html",
+    "run": "npx parcel build ./src/index.html && npx parcel serve ./src/index.html",
     "start": "npx parcel serve ./src/index.html"
   },
   "dependencies": {

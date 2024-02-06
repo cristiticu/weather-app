@@ -6,18 +6,29 @@ const mockWeatherData = '{"coord":{"lon":23.6,"lat":46.7667},"weather":[{"id":80
 const fakeWeatherData = JSON.parse(mockWeatherData);
 const openweatherurl = 'https://api.openweathermap.org/data/2.5/weather?units=metric&appid=8eb16d0f89f9abb9566d44e84d13627f';
 
-export default function Main(){
-    const [weatherData, setWeatherData] = useState(fakeWeatherData);
+type menuOption = 'weatherNow' | 'weatherForecast' | 'aqi';
 
-    async function handleCityChanged(val){
-        const newWeatherData = await fetch(openweatherurl + `&q=${val}`).then((response) => response.json());
-        setWeatherData(newWeatherData);
+
+export default function Main(){
+    let initialMenu: menuOption = 'weatherNow';
+
+    const [weatherData, setWeatherData] = useState(fakeWeatherData);
+    const [selectedMenu, setSelectedMenu] = useState(initialMenu);
+
+    console.log(weatherData);
+
+    async function handleCityChanged(cityName){
+        const newWeatherData = await fetch(openweatherurl + `&q=${cityName}`).then((response) => response.json());
+        if(newWeatherData.cod === '404')
+            setWeatherData(undefined);
+        else
+            setWeatherData(newWeatherData);
     }
     
     return (
         <Fragment>
-            <Navbar onCitySubmitted={(val) => handleCityChanged(val.target.value)} />
-            <WeatherSection weatherData={weatherData}/>
+            <Navbar onCitySubmitted={(cityData) => handleCityChanged(cityData)} />
+            {typeof weatherData !== 'undefined' ? (<WeatherSection weatherData={weatherData}/>) : (<>ERROR!</>) }
         </Fragment>
     );
 }
