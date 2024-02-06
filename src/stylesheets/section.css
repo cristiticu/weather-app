@@ -13,13 +13,20 @@
     color:rgb(55, 55, 55)
 }
 
+.error {
+    border-color: rgb(247, 114, 114);
+}
+
+.section-title {
+    font-size: 1.3em;
+}
+
 
 /* WIDE SCREEN */
 @media only screen and (min-width: 1024px){
     .section {
         padding: 36px;
-        padding-right: 10vw;
-        margin-left: 25vw;
+        margin-left: 30vw;
 
         font-size: 1.5em;
     }

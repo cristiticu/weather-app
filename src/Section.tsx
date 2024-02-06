@@ -6,10 +6,10 @@ import './stylesheets/section.css'
  * @param props a title and the children to be wrapped. The title will be on top
  * @returns the children wrapped in a div with a 'section' class
  */
-export default function Section({ title, children }: {title: string, children: JSX.Element | JSX.Element[]}): JSX.Element{
+export default function Section({ title, type, children }: {title: string, type: 'default' | 'error', children: JSX.Element | JSX.Element[]}): JSX.Element{
     return(
-        <div className="section">
-            <label>{title}</label>
+        <div className={"section " + (type === 'error' ? 'error' : null)}>
+            <label className="section-title">{title}</label>
             {children}
         </div>
     );
