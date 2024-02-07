@@ -55,16 +55,24 @@ export default function Navbar({ onCitySubmitted, onError }){
         <div className="navbar">
             <span className="title unselectable">weather.net</span>
             <div className="search-wrapper">
-                <input className="search-bar" type="search" placeholder="search your city" onChange={(e) => handleCityChanged(e)} />
+                <input id="citySearch" className="search-bar" type="search" placeholder="search your city" onChange={(e) => handleCityChanged(e)} />
                 {suggestions &&
                 <div className="suggestions">
                     <ul>
-                        {suggestions.map((suggestion, index) => {
+                        <li key={-1}>
+                            <button className="suggestion">Locate me</button>
+                        </li>
+                        {suggestions.length !== 0 ? (
+                            suggestions.map((suggestion, index) => {
                             if(suggestion)
                                 return (<li key={index}>
                                         <button className="suggestion" value={index} onClick={(e) => handleCitySubmit(e)}>{suggestion.name + ', ' + suggestion.country}</button>
                                         </li>);
-                        })}
+                        })) : (
+                            <li key={-2}>
+                                <span>no suggestions! try something else</span>
+                            </li>
+                        )}
                     </ul>
                 </div>}
             </div>

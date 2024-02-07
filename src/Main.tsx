@@ -51,9 +51,9 @@ export default function Main(){
                 <Section type='default' title="no city selected">
                     <br />
                     <br />
-                    <label>
+                    <span>
                         search for a city or allow localization 
-                    </label>
+                    </span>
                 </Section>
             ) : (
                 <WeatherSection weatherData={weatherData}/>
