@@ -7,10 +7,6 @@ import { useState } from 'react';
 const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=suce&fuzzy=0.7&maxRows=4&username=nicko454g&featureCode=PPLA&featureCode=PPLA2&featureCode=PPLC&featureCode=PPLS&featureCode=PPL');
 //const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=suce&fuzzy=0.7&maxRows=4&username=nicko454g&featureCode=PPL');
 
-function getSuggestions(search: string): string[] | null {
-    return [search, search, search];
-}
-
 
 /**
  * Debounced function factory. On a given function toDebounce, returns a 'debounced' function that 
@@ -32,7 +28,7 @@ function debounce(toDebounce: Function, time: number = 600): Function {
 
 
 
-export default function Navbar({ onCitySubmitted }){
+export default function Navbar({ onCitySubmitted, onError }){
     const [suggestions, setSuggestions] = useState(null);
 
     const handleCityChanged = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -44,7 +40,8 @@ export default function Navbar({ onCitySubmitted }){
                 setSuggestions(newSuggestions.geonames.map(newSuggestion => {
                     return {name: newSuggestion.name, country: newSuggestion.countryName, coords: {lat: Number.parseFloat(newSuggestion.lat), long: Number.parseFloat(newSuggestion.lng)}};
                 }));
-            }));
+            }))
+            .catch((error) => onError(error));
         else
             setSuggestions(null);
     }, 600);

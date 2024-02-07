@@ -11,32 +11,40 @@ type menuOption = 'weatherNow' | 'weatherForecast' | 'aqi';
 
 
 export default function Main(){
-    let initialMenu: menuOption = 'weatherNow';
-
     const [weatherData, setWeatherData] = useState(null);
-    const [selectedMenu, setSelectedMenu] = useState(initialMenu);
+    const [selectedMenu, setSelectedMenu] = useState('weatherNow');
     const [error, setError] = useState(null);
 
     console.log(weatherData);
 
-    async function handleCityChanged(cityName){
-        const newWeatherData = await fetch(openweatherurl + `&q=${cityName}`).then((response) => response.json());
-        if(newWeatherData.cod === '404'){
-            setWeatherData(null);
-            setError('City weather unavailable');
-        }
-        else{
-            setWeatherData(newWeatherData);
-            setError(null);
-        }
+    function handleCityChanged(cityName){
+        fetch(openweatherurl + `&q=${cityName}`)
+            .then((response) => {
+                if(!response.ok)
+                    throw new Error(response.status.toString() + ': City weather unavailable');
+                return response.json();
+            })
+            .then((cityData) => {
+                setWeatherData(cityData);
+                setError(null);
+            })
+            .catch((error) => {
+                setWeatherData(null);
+                setError(error.message);
+            });
+    }
+
+    function handleError(error){
+        setWeatherData(null);
+        setError(error.message);
     }
     
     return (
         <Fragment>
-            <Navbar onCitySubmitted={(cityData) => handleCityChanged(cityData)} />
-            {error === null ? null : (
+            <Navbar onCitySubmitted={(cityData) => handleCityChanged(cityData)} onError={(error) => handleError(error)}/>
+            {error !== null && (
                 <Section type='error' title={error}>
-                    <></>
+                    {null}
                 </Section>
             )}
             {weatherData === null ? (
