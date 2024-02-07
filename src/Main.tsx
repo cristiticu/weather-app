@@ -15,8 +15,6 @@ export default function Main(){
     const [selectedMenu, setSelectedMenu] = useState('weatherNow');
     const [error, setError] = useState(null);
 
-    console.log(weatherData);
-
     function handleCityChanged(cityName){
         fetch(openweatherurl + `&q=${cityName}`)
             .then((response) => {

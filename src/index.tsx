@@ -5,7 +5,5 @@ import Main from './Main'
 
 const root = createRoot(document.getElementById('root') as HTMLElement);
 root.render(
-    <StrictMode>
-        <Main />
-    </StrictMode>
+    <Main />
 );
