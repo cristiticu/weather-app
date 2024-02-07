@@ -60,7 +60,8 @@ export default function Navbar({ onCitySubmitted, onError }){
                 <div className="suggestions">
                     <ul>
                         <li key={-1}>
-                            <button className="suggestion">Locate me</button>
+                            <button className="suggestion">locate me</button>
+                            <hr />
                         </li>
                         {suggestions.length !== 0 ? (
                             suggestions.map((suggestion, index) => {
