@@ -1,4 +1,4 @@
-import './stylesheets/navbar.css'
+import './stylesheets/navbar.css';
 
 import { useState } from 'react';
 
@@ -31,6 +31,7 @@ function debounce(toDebounce: Function, time: number = 600): Function {
 export default function Navbar({ onCitySubmitted, onError }){
     const [suggestions, setSuggestions] = useState(null);
 
+    
     const handleCityChanged = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
         citySuggestionsURL.searchParams.set('q', e.target.value);
         if(e.target.value.length >= 3)
@@ -38,13 +39,14 @@ export default function Navbar({ onCitySubmitted, onError }){
             .then((response) => response.json()
             .then((newSuggestions) => {
                 setSuggestions(newSuggestions.geonames.map(newSuggestion => {
-                    return {name: newSuggestion.name, country: newSuggestion.countryName, coords: {lat: Number.parseFloat(newSuggestion.lat), long: Number.parseFloat(newSuggestion.lng)}};
+                    return {name: newSuggestion.name.toLocaleLowerCase(), country: newSuggestion.countryName.toLocaleLowerCase(), coords: {lat: Number.parseFloat(newSuggestion.lat), long: Number.parseFloat(newSuggestion.lng)}};
                 }));
             }))
             .catch((error) => onError(error));
         else
             setSuggestions(null);
     }, 600);
+
 
     function handleCitySubmit(e){
         onCitySubmitted(suggestions[e.target.value].name);
