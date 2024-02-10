@@ -2,7 +2,7 @@ import WeatherSection from './WeatherSection';
 import Navbar from './Navbar';
 import Section from './Section';
 import Loader from './Loader';
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 
 const openweatherURL = new URL('https://api.openweathermap.org/data/2.5/weather?units=metric&appid=8eb16d0f89f9abb9566d44e84d13627f');
 
@@ -17,12 +17,20 @@ export default function Main(){
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    function handleCityChanged(cityName){
+
+    useEffect(() => {
+        console.log("Loaded");
+    }, []);
+
+
+    function handleCityChanged(city){
         setIsLoading(true);
+        
         setError(null);
         setWeatherData(null);
 
-        openweatherURL.searchParams.set('q', cityName);
+        openweatherURL.searchParams.set('lat', city.coords.lat);
+        openweatherURL.searchParams.set('lon', city.coords.long);
         
         fetch(openweatherURL.toString())
             .then((response) => {
@@ -30,7 +38,7 @@ export default function Main(){
                     throw new Error(response.status.toString() + ': city weather unavailable');
                 return response.json();
             })
-            .then((cityData) =>setWeatherData(cityData))
+            .then((cityData) => setWeatherData({...cityData, name: city.name}))
             .catch((error) => handleError(error))
             .finally(() => setIsLoading(false));
     }
