@@ -19,7 +19,7 @@ const weatherTitles = ['asking the weather gods', 'checking the weather stone', 
 
 export default function Main(): JSX.Element{
     const [weatherData, setWeatherData] = useState(null);
-    const [selectedMenu, setSelectedMenu]: [s: menuOption, ss: (s: menuOption) => void] = useState('weatherForecast' as menuOption);
+    const [selectedMenu, setSelectedMenu]: [s: menuOption, ss: (s: menuOption) => void] = useState('weatherNow' as menuOption);
     const [isLoading, setIsLoading]: [l: boolean, sl: (l: boolean) => void] = useState(false);
     const [error, setError]: [e: string, se: (e: string) => void] = useState(null);
 
@@ -40,22 +40,22 @@ export default function Main(): JSX.Element{
     }, []);
 
 
-    function handleCityChanged(city: cityData){
+    function handleCityChanged(city: CityData){
         setIsLoading(true);
-        
         setError(null);
         setWeatherData(null);
 
         openweatherURL.searchParams.set('lat', city.coords.lat);
         openweatherURL.searchParams.set('lon', city.coords.long);
-        
+        // ^ COMMOn
+        // v different
         fetch(openweatherURL.toString())
             .then((response) => {
                 if(!response.ok)
                     throw new Error(response.status.toString() + ': city weather unavailable');
                 return response.json();
             })
-            .then((cityData) => {
+            .then((cityData) => { // v COMMON
                 if(city.name)
                     setWeatherData({...cityData, name: city.name});
                 else 
