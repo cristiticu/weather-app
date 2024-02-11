@@ -17,6 +17,10 @@
     border-color: rgb(247, 114, 114);
 }
 
+.loading {
+    border-color: rgb(137, 137, 137)
+}
+
 .section-title {
     font-size: 1.3em;
 }

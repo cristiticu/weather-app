@@ -1,4 +1,6 @@
 import WeatherSection from './WeatherSection';
+import ForecastSection from './ForecastSection';
+
 import Navbar from './Navbar';
 import Section from './Section';
 import Loader from './Loader';
@@ -8,6 +10,7 @@ import { Fragment, useEffect, useState } from 'react';
 const openweatherURL = new URL('https://api.openweathermap.org/data/2.5/weather?units=metric&appid=8eb16d0f89f9abb9566d44e84d13627f');
 
 type menuOption = 'weatherNow' | 'weatherForecast' | 'aqi';
+type CityData = {coords: {lat: string, long: string}, name?: string};
 
 const weatherTitles = ['asking the weather gods', 'checking the weather stone', 'looking out the window'];
 
@@ -16,7 +19,7 @@ const weatherTitles = ['asking the weather gods', 'checking the weather stone', 
 
 export default function Main(): JSX.Element{
     const [weatherData, setWeatherData] = useState(null);
-    const [selectedMenu, setSelectedMenu]: [s: menuOption, ss: (s: menuOption) => void] = useState('weatherNow' as menuOption);
+    const [selectedMenu, setSelectedMenu]: [s: menuOption, ss: (s: menuOption) => void] = useState('weatherForecast' as menuOption);
     const [isLoading, setIsLoading]: [l: boolean, sl: (l: boolean) => void] = useState(false);
     const [error, setError]: [e: string, se: (e: string) => void] = useState(null);
 
@@ -27,7 +30,7 @@ export default function Main(): JSX.Element{
         else{
             setIsLoading(true);
             navigator.geolocation.getCurrentPosition((position) => {
-                const positionData = {coords: {lat: position.coords.latitude, long: position.coords.longitude}};
+                const positionData = {coords: {lat: position.coords.latitude.toString(), long: position.coords.longitude.toString()}};
                 handleCityChanged(positionData);
             }, (error) => {
                 setIsLoading(false);
@@ -37,7 +40,7 @@ export default function Main(): JSX.Element{
     }, []);
 
 
-    function handleCityChanged(city){
+    function handleCityChanged(city: cityData){
         setIsLoading(true);
         
         setError(null);
@@ -79,7 +82,7 @@ export default function Main(): JSX.Element{
             )}
 
             {isLoading ? (
-                <Section type='default' title={weatherTitles[Math.floor(Math.random() * 3)]}>
+                <Section type='loading' title={weatherTitles[Math.floor(Math.random() * 3)]}>
                     <br />
                     <Loader />
                 </Section>
@@ -93,7 +96,8 @@ export default function Main(): JSX.Element{
                         </span>
                     </Section>
                 ) : (
-                    <WeatherSection weatherData={weatherData}/>
+                    (selectedMenu === 'weatherNow' && <WeatherSection weatherData={weatherData} />) ||
+                    (selectedMenu === 'weatherForecast' && <ForecastSection weatherData={weatherData}/>)
                 )
             )}
         </Fragment>
