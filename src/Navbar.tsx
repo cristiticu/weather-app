@@ -49,7 +49,7 @@ function debounce(toDebounce: Function, time: number = 600): (args: any) => void
  * @param props two handlers, one for submitting a city and one for handling errors on searching 
  * @returns the component
  */
-export default function Navbar({ onCitySubmitted, onError }: { onCitySubmitted: (c: WeatherSuggestion) => void, onError: (e: Error) => void}): JSX.Element {
+export default function Navbar({ searchDisabled, onCitySubmitted, onError }: { searchDisabled: boolean, onCitySubmitted: (c: WeatherSuggestion) => void, onError: (e: Error) => void}): JSX.Element {
     const [suggestions, setSuggestions]: [s: WeatherSuggestion[], ss: (s: WeatherSuggestion) => void] = useState(null);
 
 
@@ -87,7 +87,7 @@ export default function Navbar({ onCitySubmitted, onError }: { onCitySubmitted: 
         <div className="navbar">
             <span className="title unselectable">weather.net</span>
             <div className="search-wrapper">
-                <input id="citySearch" className="search-bar" type="search" placeholder="search your city" onChange={(e) => handleCityChanged(e)} />
+                <input disabled={searchDisabled} id="citySearch" className="search-bar" type="search" placeholder="search your city" onChange={(e) => handleCityChanged(e)} />
                 {suggestions &&
                 <div className="suggestions">
                     <ul>
