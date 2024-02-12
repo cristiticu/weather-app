@@ -13,8 +13,8 @@ const citySuggestionsURL = new URL('http://api.openweathermap.org/geo/1.0/direct
 
 
 interface Coordinates {
-    lat: number,
-    long: number
+    lat: string,
+    long: string
 };
 
 interface WeatherSuggestion {
@@ -65,8 +65,8 @@ export default function Navbar({ searchDisabled, onCitySubmitted, onError }: { s
                 setSuggestions(newSuggestions.map(newSuggestion => {
                     return {name: newSuggestion.name.toLocaleLowerCase(), 
                             country: newSuggestion.country.toLocaleLowerCase(), 
-                            coords: { lat: Number.parseFloat(newSuggestion.lat), 
-                                      long: Number.parseFloat(newSuggestion.lon)
+                            coords: { lat: newSuggestion.lat, 
+                                      long: newSuggestion.lon
                                     }
                             };
                 }));

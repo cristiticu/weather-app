@@ -1,0 +1,35 @@
+.forecast {
+    list-style-type: none;
+    white-space:nowrap;
+    overflow-x: scroll;
+    width: 70vw;
+
+    margin-top: 4vh;
+}
+
+.forecastElement {
+    display:inline;
+    padding: 2px;
+    font-size: 1.1em;
+}
+
+.forecastElement ul {
+    list-style: none;
+    align-items: center;
+    display: inline-grid;
+}
+
+.forecastElement li {
+    text-align: center;
+}
+
+/* WIDE SCREEN */
+@media only screen and (min-width: 1024px){
+    .forecast {
+        width: 40vw;
+    }
+
+    .forecastElement {
+        padding: 12px;
+    }
+}

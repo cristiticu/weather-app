@@ -29,8 +29,10 @@ export default function WeatherSection({ weatherData }): JSX.Element{
                                     'storm', 'hurricane'];
     const windSpeedIndex = Math.floor((windSpeed > 100 ? 100 : windSpeed) / 10);
 
+    const name = (weatherData.providedName) ? weatherData.providedName : weatherData.name;
+
     return (
-        <Section type='default' title={weatherData.name.toLocaleLowerCase() + ', ' + weatherData.sys.country.toLocaleLowerCase()}>
+        <Section type='default' title={name.toLocaleLowerCase() + ', ' + weatherData.sys.country.toLocaleLowerCase()}>
             <ul className="weather-list">
                 <li className="weather-data important-data">
                     <img src={getWeaterStatusLink(weatherData.weather[0].icon)} />

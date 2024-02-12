@@ -7,9 +7,7 @@ import Loader from './Loader';
 
 import { Fragment, useEffect, useState } from 'react';
 
-const openweatherURL = new URL('https://api.openweathermap.org/data/2.5/weather?units=metric&appid=8eb16d0f89f9abb9566d44e84d13627f');
-
-type menuOption = 'weatherNow' | 'weatherForecast' | 'aqi';
+type menuOption = 'weather' | 'forecast' | 'air_pollution';
 type CityData = {coords: {lat: string, long: string}, name?: string};
 
 const weatherTitles = ['asking the weather gods', 'checking the weather stone', 'looking out the window'];
@@ -19,10 +17,11 @@ const weatherTitles = ['asking the weather gods', 'checking the weather stone', 
 
 export default function Main(): JSX.Element{
     const [weatherData, setWeatherData] = useState(null);
-    const [selectedMenu, setSelectedMenu]: [s: menuOption, ss: (s: menuOption) => void] = useState('weatherNow' as menuOption);
+    const [selectedMenu, setSelectedMenu]: [s: menuOption, ss: (s: menuOption) => void] = useState('forecast' as menuOption);
     const [isLoading, setIsLoading]: [l: boolean, sl: (l: boolean) => void] = useState(false);
     const [error, setError]: [e: string, se: (e: string) => void] = useState(null);
 
+    const openweatherURL = new URL(`https://api.openweathermap.org/data/2.5/${selectedMenu}?units=metric&appid=8eb16d0f89f9abb9566d44e84d13627f`);
 
     useEffect(() => {
         if(!navigator.geolocation)
@@ -47,19 +46,17 @@ export default function Main(): JSX.Element{
 
         openweatherURL.searchParams.set('lat', city.coords.lat);
         openweatherURL.searchParams.set('lon', city.coords.long);
-        // ^ COMMOn
-        // v different
         fetch(openweatherURL.toString())
             .then((response) => {
                 if(!response.ok)
                     throw new Error(response.status.toString() + ': city weather unavailable');
                 return response.json();
             })
-            .then((cityData) => { // v COMMON
+            .then((responseData) => {
                 if(city.name)
-                    setWeatherData({...cityData, name: city.name});
+                    setWeatherData({...responseData, providedName: city.name});
                 else 
-                    setWeatherData({...cityData});
+                    setWeatherData({...responseData});
             })
             .catch((error) => handleError(error))
             .finally(() => setIsLoading(false));
@@ -96,8 +93,8 @@ export default function Main(): JSX.Element{
                         </span>
                     </Section>
                 ) : (
-                    (selectedMenu === 'weatherNow' && <WeatherSection weatherData={weatherData} />) ||
-                    (selectedMenu === 'weatherForecast' && <ForecastSection weatherData={weatherData}/>)
+                    (selectedMenu === 'weather' && <WeatherSection weatherData={weatherData} />) ||
+                    (selectedMenu === 'forecast' && <ForecastSection weatherData={weatherData}/>)
                 )
             )}
         </Fragment>
