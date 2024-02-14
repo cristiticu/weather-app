@@ -8,7 +8,7 @@ import Section from './Section';
  * @param status the status from the api response (eg: 20n)
  * @returns the appropiate link for the icon
  */
-function getWeaterStatusLink(status: string) : string {
+function getWeaterStatusLink(status: string): string {
     return `https://openweathermap.org/img/wn/${status}@2x.png`;
 }
 
@@ -18,7 +18,7 @@ function getWeaterStatusLink(status: string) : string {
  * @param param0 
  * @returns 
  */
-export default function WeatherSection({ weatherData }): JSX.Element{
+export default function WeatherSection({ weatherData }) {
     const windSpeed = weatherData.wind.speed * 3.6; // Converting m/s to km/h
     const windAngleIndex = Math.floor((weatherData.wind.deg + 45) % 360 / 90); // Calculating direction from angle: a 45 degree 
                                                                             // offset divided by 90 degrees / direction giving the index

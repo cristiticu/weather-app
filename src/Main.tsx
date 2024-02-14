@@ -1,9 +1,7 @@
+import Navbar from './Navbar';
+import { LoaderSection, ErrorSection, DefaultSection } from './InfoSections';
 import WeatherSection from './WeatherSection';
 import ForecastSection from './ForecastSection';
-
-import Navbar from './Navbar';
-import Section from './Section';
-import Loader from './Loader';
 
 import { Fragment, useEffect, useState } from 'react';
 
@@ -15,11 +13,12 @@ const weatherTitles = ['asking the weather gods', 'checking the weather stone', 
 
 //TODO: Setup reducers and context for easier state management
 
-export default function Main(): JSX.Element{
+export default function Main() {
     const [weatherData, setWeatherData] = useState(null);
-    const [selectedMenu, setSelectedMenu]: [s: menuOption, ss: (s: menuOption) => void] = useState('forecast' as menuOption);
-    const [isLoading, setIsLoading]: [l: boolean, sl: (l: boolean) => void] = useState(false);
-    const [error, setError]: [e: string, se: (e: string) => void] = useState(null);
+    const [selectedMenu, setSelectedMenu] = useState('forecast' as menuOption);
+    
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
     const openweatherURL = new URL(`https://api.openweathermap.org/data/2.5/${selectedMenu}?units=metric&appid=8eb16d0f89f9abb9566d44e84d13627f`);
 
@@ -72,26 +71,13 @@ export default function Main(): JSX.Element{
                     onCitySubmitted={(cityData) => handleCityChanged(cityData)} 
                     onError={(error) => handleError(error)} />
             
-            {error !== null && (
-                <Section type='error' title={error}>
-                    {null}
-                </Section>
-            )}
+            { error && <ErrorSection message={error} /> }
 
-            {isLoading ? (
-                <Section type='loading' title={weatherTitles[Math.floor(Math.random() * 3)]}>
-                    <br />
-                    <Loader />
-                </Section>
+            { isLoading ? (
+                <LoaderSection message={weatherTitles[Math.floor(Math.random() * 3)]} />
             ) : (
                 weatherData === null ? (
-                    <Section type='default' title='no city selected'>
-                        <br />
-                        <br />
-                        <span>
-                            search for a city or allow localization 
-                        </span>
-                    </Section>
+                    <DefaultSection />
                 ) : (
                     (selectedMenu === 'weather' && <WeatherSection weatherData={weatherData} />) ||
                     (selectedMenu === 'forecast' && <ForecastSection weatherData={weatherData}/>)

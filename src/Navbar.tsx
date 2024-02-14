@@ -32,7 +32,7 @@ interface WeatherSuggestion {
  * @param time the number of milliseconds to wait for more calls
  * @returns a debounced version of the given function (a closure over the function 'toDebounce')
  */
-function debounce(toDebounce: Function, time: number = 600): (args: any) => void {
+function debounce(toDebounce: Function, time: number = 600) {
     let timer: number;
     return (...args) => {
         clearTimeout(timer);
@@ -49,13 +49,13 @@ function debounce(toDebounce: Function, time: number = 600): (args: any) => void
  * @param props two handlers, one for submitting a city and one for handling errors on searching 
  * @returns the component
  */
-export default function Navbar({ searchDisabled, onCitySubmitted, onError }: { searchDisabled: boolean, onCitySubmitted: (c: WeatherSuggestion) => void, onError: (e: Error) => void}): JSX.Element {
+export default function Navbar({ searchDisabled, onCitySubmitted, onError }: { searchDisabled: boolean, onCitySubmitted: (c: WeatherSuggestion) => void, onError: (e: Error) => void}) {
     const [suggestions, setSuggestions]: [s: WeatherSuggestion[], ss: (s: WeatherSuggestion) => void] = useState(null);
 
 
     // Closure for handling the search of citites. When an user types, it won't fire the fetch immediately,
     // instead it will wait 600ms for input, reseting on each letter typed
-    const handleCityChanged: (e: React.ChangeEvent<HTMLInputElement>) => void = debounce((e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCityChanged = debounce((e) => {
         citySuggestionsURL.searchParams.set('q', e.target.value);
 
         if(e.target.value.length >= 3)
@@ -78,7 +78,7 @@ export default function Navbar({ searchDisabled, onCitySubmitted, onError }: { s
 
 
     // Function for handling city submissions
-    function handleCitySubmit(e): void{
+    function handleCitySubmit(e) {
         onCitySubmitted(suggestions[e.target.value]);
         setSuggestions(null);
     }
