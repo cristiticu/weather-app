@@ -5,7 +5,7 @@ import ForecastSection from './ForecastSection';
 
 import { Fragment, useEffect, useState } from 'react';
 
-type menuOption = 'weather' | 'forecast' | 'air_pollution';
+type MenuOption = 'weather' | 'forecast' | 'air_pollution';
 type CityData = {coords: {lat: string, long: string}, name?: string};
 
 const weatherTitles = ['asking the weather gods', 'checking the weather stone', 'looking out the window'];
@@ -15,12 +15,12 @@ const weatherTitles = ['asking the weather gods', 'checking the weather stone', 
 
 export default function Main() {
     const [weatherData, setWeatherData] = useState(null);
-    const [selectedMenu, setSelectedMenu] = useState('forecast' as menuOption);
+
+    const [city, setCity] = useState(null);
+    const [selectedMenu, setSelectedMenu] = useState('forecast' as MenuOption);
     
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
-
-    const openweatherURL = new URL(`https://api.openweathermap.org/data/2.5/${selectedMenu}?units=metric&appid=8eb16d0f89f9abb9566d44e84d13627f`);
 
     useEffect(() => {
         if(!navigator.geolocation)
@@ -37,29 +37,53 @@ export default function Main() {
         }
     }, []);
 
-
-    function handleCityChanged(city: CityData){
-        setIsLoading(true);
-        setError(null);
-        setWeatherData(null);
-
+    async function fetchData(menu: MenuOption, city: CityData) {
+        const openweatherURL = new URL(`https://api.openweathermap.org/data/2.5/${menu}?units=metric&appid=8eb16d0f89f9abb9566d44e84d13627f`);
         openweatherURL.searchParams.set('lat', city.coords.lat);
         openweatherURL.searchParams.set('lon', city.coords.long);
-        fetch(openweatherURL.toString())
+        
+        return fetch(openweatherURL.toString())
             .then((response) => {
                 if(!response.ok)
                     throw new Error(response.status.toString() + ': city weather unavailable');
                 return response.json();
-            })
-            .then((responseData) => {
-                if(city.name)
-                    setWeatherData({...responseData, providedName: city.name});
-                else 
-                    setWeatherData({...responseData});
-            })
-            .catch((error) => handleError(error))
-            .finally(() => setIsLoading(false));
+            });
     }
+
+
+    function handleCityChanged(city: CityData) {
+        setIsLoading(true);
+        setError(null);
+
+        fetchData(selectedMenu, city)
+        .then((responseData) => {
+            if(city.name)
+                setWeatherData({...responseData, providedName: city.name});
+            else 
+                setWeatherData({...responseData});
+            setCity(city);
+        })
+        .catch((error) => handleError(error))
+        .finally(() => setIsLoading(false));
+    }
+
+    function handleMenuChanged(menu: MenuOption) {
+        setIsLoading(true);
+        setError(null);
+
+        fetchData(menu, city)
+        .then((responseData) => {
+            if(city.name)
+                setWeatherData({...responseData, providedName: city.name});
+            else 
+                setWeatherData({...responseData});
+            setSelectedMenu(menu);
+        })
+        .catch((error) => handleError(error))
+        .finally(() => setIsLoading(false));
+    }
+
+
 
     function handleError(error: Error): void{
         setError(error.message);
@@ -83,6 +107,7 @@ export default function Main() {
                     (selectedMenu === 'forecast' && <ForecastSection weatherData={weatherData}/>)
                 )
             )}
+            <button onClick={() => handleMenuChanged('weather')}>TEST</button>
         </Fragment>
     );
 }
