@@ -23,6 +23,22 @@
     text-align: center;
 }
 
+.weekday {
+    padding: 2px;
+    margin: 2px;
+
+    font-size: 1em;
+    float: left;
+
+    background-color:#e2ddd7;
+    color: rgb(41, 41, 41);
+
+    border-radius: 4px;
+    
+    appearance: none;
+    -webkit-appearance: none; 
+}
+
 /* WIDE SCREEN */
 @media only screen and (min-width: 1024px){
     .forecast {

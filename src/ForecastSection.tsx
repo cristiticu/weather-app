@@ -21,10 +21,6 @@ export default function ForecastSection({ weatherData }): JSX.Element{
 
     const name = (weatherData.providedName ? weatherData.providedName : weatherData.city.name);
 
-    function handleIndexChanged(index: number): void{
-        setForecastIndex(index);
-    }
-
     return (
         <Section type='default' title={name.toLocaleLowerCase() + ', ' + weatherData.city.country.toLocaleLowerCase()}>
                 <ul className='forecast'>
@@ -43,11 +39,11 @@ export default function ForecastSection({ weatherData }): JSX.Element{
                         );
                     })}
                 </ul>
-                <button onClick={() => handleIndexChanged(0)}>today</button>
-                <button onClick={() => handleIndexChanged(1)}>{weekDays[(todayIndex + 1) % 7]}</button>
-                <button onClick={() => handleIndexChanged(2)}>{weekDays[(todayIndex + 2) % 7]}</button>
-                <button onClick={() => handleIndexChanged(3)}>{weekDays[(todayIndex + 3) % 7]}</button>
-                <button onClick={() => handleIndexChanged(4)}>{weekDays[(todayIndex + 4) % 7]}</button>
+                <button className='weekday' disabled={forecastIndex === 0} onClick={() => setForecastIndex(0)}>today</button>
+                <button className='weekday' disabled={forecastIndex === 1} onClick={() => setForecastIndex(1)}>{weekDays[(todayIndex + 1) % 7]}</button>
+                <button className='weekday' disabled={forecastIndex === 2} onClick={() => setForecastIndex(2)}>{weekDays[(todayIndex + 2) % 7]}</button>
+                <button className='weekday' disabled={forecastIndex === 3} onClick={() => setForecastIndex(3)}>{weekDays[(todayIndex + 3) % 7]}</button>
+                <button className='weekday' disabled={forecastIndex === 4} onClick={() => setForecastIndex(4)}>{weekDays[(todayIndex + 4) % 7]}</button>
         </Section>
     );
 }

@@ -11,8 +11,6 @@ type CityData = {coords: {lat: string, long: string}, name?: string};
 const weatherTitles = ['asking the weather gods', 'checking the weather stone', 'looking out the window'];
 
 
-//TODO: Setup reducers and context for easier state management
-
 export default function Main() {
     const [weatherData, setWeatherData] = useState(null);
 
