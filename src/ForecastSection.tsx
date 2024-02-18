@@ -20,11 +20,17 @@ export default function ForecastSection({ weatherData }): JSX.Element{
     const todayIndex = (Math.floor(Number.parseInt(weatherData.list[0].dt) / 86400) + 3) % 7;
 
     const name = (weatherData.providedName ? weatherData.providedName : weatherData.city.name);
+    
+    const lostStamps = Number.parseInt(weatherData.list[0].dt_txt.split(' ')[1].split(':')[0]) / 3;
+    let sliceStart = forecastIndex * 8 - lostStamps;
+    
+    if(sliceStart < 0)
+        sliceStart = 0;
 
     return (
         <Section type='default' title={name.toLocaleLowerCase() + ', ' + weatherData.city.country.toLocaleLowerCase()}>
                 <ul className='forecast'>
-                    {weatherData.list.slice(forecastIndex * 8, (forecastIndex * 8) + 8).map((weatherElement, index) => {
+                    {weatherData.list.slice(sliceStart, sliceStart + 8).map((weatherElement, index) => {
                         const temp = Math.round(weatherElement.main.temp);
                         const hour = weatherElement.dt_txt.split(' ')[1].split(':')[0];
 

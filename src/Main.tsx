@@ -3,7 +3,7 @@ import { LoaderSection, ErrorSection, DefaultSection } from './InfoSections';
 import WeatherSection from './WeatherSection';
 import ForecastSection from './ForecastSection';
 
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, useRef } from 'react';
 
 type MenuOption = 'weather' | 'forecast' | 'air_pollution';
 type CityData = {coords: {lat: string, long: string}, name?: string};
@@ -12,7 +12,7 @@ const weatherTitles = ['asking the weather gods', 'checking the weather stone', 
 
 
 export default function Main() {
-    const [weatherData, setWeatherData] = useState(null);
+    const weatherData = useRef(null);
 
     const [city, setCity] = useState(null);
     const [selectedMenu, setSelectedMenu] = useState('forecast' as MenuOption);
@@ -56,9 +56,9 @@ export default function Main() {
         fetchData(selectedMenu, city)
         .then((responseData) => {
             if(city.name)
-                setWeatherData({...responseData, providedName: city.name});
+                weatherData.current = {...responseData, providedName: city.name};
             else 
-                setWeatherData({...responseData});
+                weatherData.current = {...responseData};
             setCity(city);
         })
         .catch((error) => handleError(error))
@@ -72,9 +72,9 @@ export default function Main() {
         fetchData(menu, city)
         .then((responseData) => {
             if(city.name)
-                setWeatherData({...responseData, providedName: city.name});
+                weatherData.current = {...responseData, providedName: city.name};
             else 
-                setWeatherData({...responseData});
+                weatherData.current = {...responseData};
             setSelectedMenu(menu);
         })
         .catch((error) => handleError(error))
@@ -98,11 +98,11 @@ export default function Main() {
             { isLoading ? (
                 <LoaderSection message={weatherTitles[Math.floor(Math.random() * 3)]} />
             ) : (
-                weatherData === null ? (
+                weatherData.current === null ? (
                     <DefaultSection />
                 ) : (
-                    (selectedMenu === 'weather' && <WeatherSection weatherData={weatherData} />) ||
-                    (selectedMenu === 'forecast' && <ForecastSection weatherData={weatherData}/>)
+                    (selectedMenu === 'weather' && <WeatherSection weatherData={weatherData.current} />) ||
+                    (selectedMenu === 'forecast' && <ForecastSection weatherData={weatherData.current}/>)
                 )
             )}
             <button onClick={() => handleMenuChanged('weather')}>TEST</button>
