@@ -1,0 +1,43 @@
+.pollutant-data{
+    list-style: none;
+}
+
+.l0{
+    color:rgb(97, 162, 47);
+}
+
+.l1{
+    color:rgb(143, 162, 47);
+}
+
+.l2{
+    color:rgb(162, 152, 47);
+}
+
+.l3{
+    color:rgb(162, 80, 47);
+}
+
+.l4{
+    color:rgb(162, 55, 47);
+}
+
+.pollutants{
+    padding-top: 16px;
+    padding: 8px;
+    margin-left: 40px;
+
+    align-items: center;
+    display: inline-grid;
+    grid-template-columns: auto auto;
+}
+
+.polluttant-name{
+    padding-right: 4em;
+}
+
+.important-data{
+    padding: 16px;
+
+    font-size: 1.4em;
+}

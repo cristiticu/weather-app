@@ -2,6 +2,7 @@ import Navbar from './Navbar';
 import { LoaderSection, ErrorSection, DefaultSection } from './InfoSections';
 import WeatherSection from './WeatherSection';
 import ForecastSection from './ForecastSection';
+import PollutionSection from './PollutionSection';
 
 import { Fragment, useEffect, useState, useRef } from 'react';
 
@@ -21,17 +22,23 @@ export default function Main() {
     const [error, setError] = useState('');
 
     useEffect(() => {
+        async function onSucces(position){
+            const fetchedCity = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=8eb16d0f89f9abb9566d44e84d13627f`)
+                                        .then((response) => response.json());
+            const positionData = {name: fetchedCity[0].name, coords: {lat: position.coords.latitude.toString(), long: position.coords.longitude.toString()}};
+            handleCityChanged(positionData);
+        }
+
+        function onError(error){
+            setIsLoading(false);
+            console.error(error);
+        }
+
         if(!navigator.geolocation)
             setError('geolocation unavailable. search for a city instead');
         else{
             setIsLoading(true);
-            navigator.geolocation.getCurrentPosition((position) => {
-                const positionData = {coords: {lat: position.coords.latitude.toString(), long: position.coords.longitude.toString()}};
-                handleCityChanged(positionData);
-            }, (error) => {
-                setIsLoading(false);
-                console.log(error);
-            });
+            navigator.geolocation.getCurrentPosition(onSucces, onError);
         }
     }, []);
 
@@ -102,10 +109,11 @@ export default function Main() {
                     <DefaultSection />
                 ) : (
                     (selectedMenu === 'weather' && <WeatherSection weatherData={weatherData.current} />) ||
-                    (selectedMenu === 'forecast' && <ForecastSection weatherData={weatherData.current}/>)
+                    (selectedMenu === 'forecast' && <ForecastSection weatherData={weatherData.current} />) ||
+                    (selectedMenu === 'air_pollution' && <PollutionSection pollutionData={weatherData.current} />)
                 )
             )}
-            <button onClick={() => handleMenuChanged('weather')}>TEST</button>
+            <button onClick={() => handleMenuChanged((selectedMenu === 'weather' ? 'forecast' : (selectedMenu === 'forecast' ? 'air_pollution' : 'weather')))}>TEST</button>
         </Fragment>
     );
 }
