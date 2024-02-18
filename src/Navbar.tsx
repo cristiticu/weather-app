@@ -9,7 +9,7 @@ import { useState } from 'react';
 //const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=cluj-napoca&fuzzy=0.7&maxRows=4&username=nicko454g&featureCode=PPL');
 
 // New suggestions URL using geocoding by openweather. Will not give as many suggestions but it's more reliable
-const citySuggestionsURL = new URL('http://api.openweathermap.org/geo/1.0/direct?q=cluj-napoca&limit=3&appid=8eb16d0f89f9abb9566d44e84d13627f');
+const citySuggestionsURL = new URL('https://api.openweathermap.org/geo/1.0/direct?q=cluj-napoca&limit=3&appid=8eb16d0f89f9abb9566d44e84d13627f');
 
 
 interface Coordinates {

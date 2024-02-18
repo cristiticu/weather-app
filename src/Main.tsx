@@ -22,14 +22,14 @@ export default function Main() {
     const [error, setError] = useState('');
 
     useEffect(() => {
-        async function onSucces(position){
+        async function onSucces(position: GeolocationPosition){
             const fetchedCity = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=8eb16d0f89f9abb9566d44e84d13627f`)
                                         .then((response) => response.json());
             const positionData = {name: fetchedCity[0].name, coords: {lat: position.coords.latitude.toString(), long: position.coords.longitude.toString()}};
             handleCityChanged(positionData);
         }
 
-        function onError(error){
+        function onError(error: GeolocationPositionError){
             setIsLoading(false);
             console.error(error);
         }
@@ -41,6 +41,18 @@ export default function Main() {
             navigator.geolocation.getCurrentPosition(onSucces, onError);
         }
     }, []);
+
+    useEffect(() => {
+        if(selectedMenu && city){
+            setIsLoading(true);
+            fetchData(selectedMenu, city)
+            .then((responseData) => {
+                weatherData.current = {...responseData, providedName: city.name};
+            })
+            .catch((error) => handleError(error))
+            .finally(() => setIsLoading(false));
+        }
+    }, [city, selectedMenu]);
 
     async function fetchData(menu: MenuOption, city: CityData) {
         const openweatherURL = new URL(`https://api.openweathermap.org/data/2.5/${menu}?units=metric&appid=8eb16d0f89f9abb9566d44e84d13627f`);
@@ -57,37 +69,17 @@ export default function Main() {
 
 
     function handleCityChanged(city: CityData) {
-        setIsLoading(true);
         setError(null);
-
-        fetchData(selectedMenu, city)
-        .then((responseData) => {
-            if(city.name)
-                weatherData.current = {...responseData, providedName: city.name};
-            else 
-                weatherData.current = {...responseData};
-            setCity(city);
-        })
-        .catch((error) => handleError(error))
-        .finally(() => setIsLoading(false));
+        setCity(city);
+        weatherData.current = null;
     }
+
 
     function handleMenuChanged(menu: MenuOption) {
-        setIsLoading(true);
+        setSelectedMenu(menu);
         setError(null);
-
-        fetchData(menu, city)
-        .then((responseData) => {
-            if(city.name)
-                weatherData.current = {...responseData, providedName: city.name};
-            else 
-                weatherData.current = {...responseData};
-            setSelectedMenu(menu);
-        })
-        .catch((error) => handleError(error))
-        .finally(() => setIsLoading(false));
+        weatherData.current = null;
     }
-
 
 
     function handleError(error: Error): void{
