@@ -1,6 +1,6 @@
-import './stylesheets/forecastsection.css';
+import './forecastsection.css';
 
-import Section from './Section';
+import { Section } from '../../sections';
 import { useState } from 'react';
 
 

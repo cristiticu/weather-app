@@ -1,6 +1,7 @@
-import './stylesheets/navbar.css';
+import './navbar.css';
 
 import { useState } from 'react';
+import { WeatherSuggestion } from '../types';
 
 
 // Old suggestions URL using geonames.org. Too many problems, including wrong coordinates/city names.
@@ -11,17 +12,6 @@ import { useState } from 'react';
 // New suggestions URL using geocoding by openweather. Will not give as many suggestions but it's more reliable
 const citySuggestionsURL = new URL('https://api.openweathermap.org/geo/1.0/direct?q=cluj-napoca&limit=3&appid=8eb16d0f89f9abb9566d44e84d13627f');
 
-
-interface Coordinates {
-    lat: string,
-    long: string
-};
-
-interface WeatherSuggestion {
-    name: string,
-    country: string,
-    coords: Coordinates
-}
 
 
 /**

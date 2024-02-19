@@ -1,15 +1,16 @@
-import Navbar from './Navbar';
-import MenuSelector from './MenuSelector';
+import { MenuOption, CityData } from './types';
 
-import { LoaderSection, ErrorSection, DefaultSection } from './InfoSections';
-import WeatherSection from './WeatherSection';
-import ForecastSection from './ForecastSection';
-import PollutionSection from './PollutionSection';
+import Navbar from './navbar';
+import MenuSelector from './menu';
+
+import { LoaderSection, ErrorSection, DefaultSection } from './sections';
+import WeatherSection from './weather/now';
+import ForecastSection from './weather/forecast';
+import PollutionSection from './weather/aqi';
 
 import { Fragment, useEffect, useState, useRef } from 'react';
 
-type MenuOption = 'weather' | 'forecast' | 'air_pollution';
-type CityData = {coords: {lat: string, long: string}, name?: string};
+
 
 const weatherTitles = ['asking the weather gods', 'checking the weather stone', 'looking out the window'];
 
@@ -27,7 +28,7 @@ export default function Main() {
         async function onSucces(position: GeolocationPosition){
             const fetchedCity = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=8eb16d0f89f9abb9566d44e84d13627f`)
                                         .then((response) => response.json());
-            const positionData = {name: fetchedCity[0].name, coords: {lat: position.coords.latitude.toString(), long: position.coords.longitude.toString()}};
+            const positionData: CityData = {name: fetchedCity[0].name, coords: {lat: position.coords.latitude.toString(), long: position.coords.longitude.toString()}};
             handleCityChanged(positionData);
         }
 

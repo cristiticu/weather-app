@@ -1,6 +1,6 @@
-import './stylesheets/pollutionsection.css';
+import './pollutionsection.css';
 
-import Section from './Section';
+import { Section } from '../../sections';
 
 export default function PollutionSection({ pollutionData }){
     const pollutionLevels = ['good', 'fair', 'moderate', 'poor', 'very poor'];

@@ -1,4 +1,4 @@
-import './stylesheets/menuselector.css';
+import './menuselector.css';
 
 export default function MenuSelector({ selectedMenu, onMenuChange }) {
     return (

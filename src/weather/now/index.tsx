@@ -1,6 +1,6 @@
-import './stylesheets/weathersection.css';
+import './weathersection.css';
 
-import Section from './Section';
+import { Section } from '../../sections';
 
 
 /**
@@ -15,7 +15,7 @@ function getWeaterStatusLink(status: string): string {
 
 /**
  * Component with the main weather information such as degrees, windspeed and humidity
- * @param param0 
+ * @param props the weather data 
  * @returns 
  */
 export default function WeatherSection({ weatherData }) {
