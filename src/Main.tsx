@@ -1,4 +1,6 @@
 import Navbar from './Navbar';
+import MenuSelector from './MenuSelector';
+
 import { LoaderSection, ErrorSection, DefaultSection } from './InfoSections';
 import WeatherSection from './WeatherSection';
 import ForecastSection from './ForecastSection';
@@ -92,6 +94,8 @@ export default function Main() {
                     onCitySubmitted={(cityData) => handleCityChanged(cityData)} 
                     onError={(error) => handleError(error)} />
             
+            <MenuSelector selectedMenu={selectedMenu} onMenuChange={handleMenuChanged} />
+            
             { error && <ErrorSection message={error} /> }
 
             { isLoading ? (
@@ -105,7 +109,6 @@ export default function Main() {
                     (selectedMenu === 'air_pollution' && <PollutionSection pollutionData={weatherData.current} />)
                 )
             )}
-            <button onClick={() => handleMenuChanged((selectedMenu === 'weather' ? 'forecast' : (selectedMenu === 'forecast' ? 'air_pollution' : 'weather')))}>TEST</button>
         </Fragment>
     );
 }

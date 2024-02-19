@@ -1,0 +1,43 @@
+.weather-menu {
+    list-style: none;
+    position: absolute;
+    display: inline-flex;
+    box-sizing: border-box;
+
+    padding: 8px;
+
+    border-radius: 0 8px 8px 0;
+
+    background-color: rgb(60, 60, 60);
+}
+
+.menu-option {
+    padding: 2px;
+    margin: 2px;
+
+    font-size: 1.7em;
+
+    background-color:#e2ddd7;
+    color: rgb(41, 41, 41);
+
+    border-radius: 2px;
+
+    padding: 8px;
+    
+    appearance: none;
+    -webkit-appearance: none; 
+}
+
+
+/* WIDE SCREEN */
+@media only screen and (min-width: 1024px){
+    .weather-menu{
+        display: inline-block;
+
+        left: 0;
+
+        padding: 12px;
+        padding-bottom: 20vh;
+    
+    }
+}
