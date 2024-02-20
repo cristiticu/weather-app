@@ -1,5 +1,6 @@
 import './section.css';
 import './loader.css';
+import { useRouteError } from 'react-router-dom';
 
 
 /**
@@ -36,9 +37,10 @@ export function LoaderSection({ message }: { message: string}): JSX.Element{
  * @param props the error message, a string
  * @returns the error component
  */
-export function ErrorSection({ message }: { message: string}): JSX.Element{
+export function ErrorSection(): JSX.Element{
+    const error = useRouteError() as Error;
     return (
-        <Section type='error' title={message}>
+        <Section type='error' title={error.message}>
             {null}
         </Section>
     );
