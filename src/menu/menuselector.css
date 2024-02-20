@@ -1,7 +1,6 @@
 .weather-menu {
-    list-style: none;
     position: absolute;
-    display: inline-flex;
+    display: inline-grid;
     box-sizing: border-box;
 
     padding: 8px;
@@ -11,7 +10,7 @@
     background-color: rgb(60, 60, 60);
 }
 
-.menu-option {
+.weather-menu button {
     padding: 2px;
     margin: 2px;
 
@@ -28,12 +27,9 @@
     -webkit-appearance: none; 
 }
 
-
 /* WIDE SCREEN */
 @media only screen and (min-width: 1024px){
     .weather-menu{
-        display: inline-block;
-
         left: 0;
 
         padding: 12px;

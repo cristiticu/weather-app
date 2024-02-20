@@ -4,7 +4,7 @@ import { useRouteError } from 'react-router-dom';
 
 
 /**
- * Component that will wrap something in a section.
+ * Component that will wrap something in a section. It is basic and the base for every other component used so far
  * @param props a title and the children to be wrapped. The title will be on top
  * @returns the children wrapped in a div with a 'section' class
  */

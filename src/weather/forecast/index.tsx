@@ -2,19 +2,14 @@ import './forecastsection.css';
 
 import { Section } from '../../sections';
 import { useState } from 'react';
+import { useLoaderData } from 'react-router-dom';
+import { getWeaterStatusLink } from '../service';
 
 
-/**
- * Utils function that will return the link for a specific openweather icon
- * @param status the status from the api response (eg: 20n)
- * @returns the appropiate link for the icon
- */
-function getWeaterStatusLink(status: string) : string {
-    return `https://openweathermap.org/img/wn/${status}@2x.png`;
-}
 
+export default function ForecastSection(): JSX.Element{
+    const weatherData = useLoaderData() as any;
 
-export default function ForecastSection({ weatherData }): JSX.Element{
     const [forecastIndex, setForecastIndex]: [d: number, sd: (d: number) => void] = useState(0);
     const weekDays = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
     const todayIndex = (Math.floor(Number.parseInt(weatherData.list[0].dt) / 86400) + 3) % 7;

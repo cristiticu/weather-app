@@ -1,17 +1,13 @@
 import './menuselector.css';
 
-export default function MenuSelector({ selectedMenu, onMenuChange }) {
+import { MenuProps } from '../types.ts';
+
+export default function MenuSelector({ menuDisabled, onMenuChanged }: MenuProps) {
     return (
-        <ul className='weather-menu'>
-            <li>
-                <button className='menu-option' onClick={() => onMenuChange('weather')}>weather</button>
-            </li>
-            <li>
-                <button className='menu-option' onClick={() => onMenuChange('forecast')}>forecast</button>
-            </li>
-            <li>
-                <button className='menu-option' onClick={() => onMenuChange('air_pollution')}>aqi</button>
-            </li>
-        </ul>
+        <div className='weather-menu'>
+                <button disabled={menuDisabled} onClick={() => onMenuChanged('weather')}>weather</button>
+                <button disabled={menuDisabled} onClick={() => onMenuChanged('forecast')}>forecast</button>
+                <button disabled={menuDisabled} onClick={() => onMenuChanged('air_pollution')}>air pollution</button>
+        </div>
     );
 }

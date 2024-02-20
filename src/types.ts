@@ -1,5 +1,4 @@
 
-
 export type MenuOption = 'weather' | 'forecast' | 'air_pollution';
 
 export type CityData = {
@@ -19,3 +18,23 @@ export type WeatherSuggestion = {
     country: string,
     coords: Coordinates,
 }
+
+export type RootProps = {
+    cityHandler: (city: WeatherSuggestion) => void,
+    menuHandler: (menu: MenuOption) => void,
+    localizationHandler: () => void,
+}
+
+export type NavbarProps = { 
+    searchDisabled: boolean, 
+    onCitySubmitted: (city: WeatherSuggestion) => void, 
+    onLocate: () => void,
+    onError: (e: Error) => void,
+}
+
+export type MenuProps = {
+    menuDisabled: boolean,
+    onMenuChanged: (menu: MenuOption) => void,
+}
+
+export type SuggestionsState = [s: WeatherSuggestion[], ss: (s: WeatherSuggestion) => void];

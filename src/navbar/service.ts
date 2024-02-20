@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { WeatherSuggestion } from './types';
+import { SuggestionsState } from '../types.ts';
 
 // Old suggestions URL using geonames.org. Too many problems, including wrong coordinates/city names.
 //const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=cluj-napoca&fuzzy=0.7&maxRows=4&username=nicko454g&featureClass=P');
@@ -37,7 +37,7 @@ function debounce(toDebounce: Function, time: number = 600) {
  * @returns current suggestions, the submit handler with extra functionality and a value changed handler
  */
 export function useSuggestionHandling(onSubmit: Function, onError: Function){
-    const [suggestions, setSuggestions]: [s: WeatherSuggestion[], ss: (s: WeatherSuggestion) => void] = useState(null);
+    const [suggestions, setSuggestions]: SuggestionsState = useState(null);
 
 
     // Closure for handling the search of citites. When an user types, it won't fire the fetch immediately,
@@ -58,7 +58,7 @@ export function useSuggestionHandling(onSubmit: Function, onError: Function){
                             };
                 }));
             }))
-            .catch((error) => onError(error));
+            .catch((error: Error) => onError(error));
         else
             setSuggestions(null);
     }, 600);

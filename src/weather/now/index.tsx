@@ -1,6 +1,7 @@
 import './weathersection.css';
 
 import { Section } from '../../sections';
+import { useLoaderData } from 'react-router-dom';
 
 
 /**
@@ -18,7 +19,9 @@ function getWeaterStatusLink(status: string): string {
  * @param props the weather data 
  * @returns 
  */
-export default function WeatherSection({ weatherData }) {
+export default function WeatherSection() {
+    const weatherData = useLoaderData() as any;
+
     const windSpeed = weatherData.wind.speed * 3.6; // Converting m/s to km/h
     const windAngleIndex = Math.floor((weatherData.wind.deg + 45) % 360 / 90); // Calculating direction from angle: a 45 degree 
                                                                             // offset divided by 90 degrees / direction giving the index

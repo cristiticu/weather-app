@@ -1,10 +1,17 @@
 import './pollutionsection.css';
 
 import { Section } from '../../sections';
+import { useLoaderData } from 'react-router-dom';
 
-export default function PollutionSection({ pollutionData }){
+
+/**
+ * 
+ * @returns 
+ */
+export default function PollutionSection(){
+    const pollutionData = useLoaderData() as any;
+
     const pollutionLevels = ['good', 'fair', 'moderate', 'poor', 'very poor'];
-    const pollutants = ['']
 
     const mainPollutionIndex = pollutionData.list[0].main.aqi - 1;
     const mainPollutionDescription = pollutionLevels[mainPollutionIndex];

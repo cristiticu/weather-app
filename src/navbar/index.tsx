@@ -1,6 +1,6 @@
 import './navbar.css';
 
-import { NavbarProps } from './types.ts';
+import { NavbarProps } from '../types.ts';
 import { useSuggestionHandling } from './service.ts'
 
 /**
