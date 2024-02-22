@@ -29,6 +29,7 @@
 .suggestions {
     box-sizing: border-box;
     position: absolute;
+    z-index: 2;
 
     left: 7vw;
 

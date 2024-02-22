@@ -1,11 +1,11 @@
 .weather-menu {
-    position: absolute;
-    display: inline-grid;
+    z-index: 0;
     box-sizing: border-box;
+    display: flex;
+
+    justify-content: center;
 
     padding: 8px;
-
-    border-radius: 0 8px 8px 0;
 
     background-color: rgb(60, 60, 60);
 }
@@ -14,12 +14,12 @@
     padding: 2px;
     margin: 2px;
 
-    font-size: 1.7em;
-
     background-color:#e2ddd7;
     color: rgb(41, 41, 41);
 
     border-radius: 2px;
+
+    font-size: 1.2em;
 
     padding: 8px;
     
@@ -30,10 +30,17 @@
 /* WIDE SCREEN */
 @media only screen and (min-width: 1024px){
     .weather-menu{
+        position: absolute;
+        display: inline-grid;
+
         left: 0;
 
         padding: 12px;
-        padding-bottom: 20vh;
-    
+
+        border-radius: 0 0 8px 0;
+    }
+
+    .weather-menu button {
+        font-size: 2em;
     }
 }

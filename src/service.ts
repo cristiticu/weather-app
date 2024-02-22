@@ -40,7 +40,7 @@ export function useStateNavigation(){
  */
 export function useLocalizationNavigation(currentURL: string, cityHandler: Function){
      useEffect(() => {
-        if(currentURL.split('/')[2].length === 0){
+        if(!currentURL.split('/')[2]){
             console.log('debug: localizing');
             handleLocalization();
         }
