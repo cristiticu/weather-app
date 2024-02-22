@@ -13,8 +13,6 @@ export default function Root(){
     const localizationHandler = useLocalizationNavigation(cityHandler);
     const navigation = useNavigation();
 
-
-
     function handleError(error: Error){
         throw new Error(error.message);
     }

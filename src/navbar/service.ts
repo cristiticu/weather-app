@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 import { SuggestionsState } from '../types.ts';
 
@@ -38,6 +38,7 @@ function debounce(toDebounce: Function, time: number = 600) {
  */
 export function useSuggestionHandling(onSubmit: Function, onError: Function){
     const [suggestions, setSuggestions]: SuggestionsState = useState(null);
+    const defaultSuggestion = useRef(null);
 
 
     // Closure for handling the search of citites. When an user types, it won't fire the fetch immediately,
@@ -65,12 +66,13 @@ export function useSuggestionHandling(onSubmit: Function, onError: Function){
 
     // Function for handling city submissions
     function handleSuggestionSubmitted(e) {
-        onSubmit(suggestions[e.target.value]);
+        onSubmit(suggestions[e.value]);
         setSuggestions(null);
     }
 
     return {
-        suggestions: suggestions, 
+        suggestions: suggestions,
+        defaultSuggestion: defaultSuggestion,
         submitHandler: handleSuggestionSubmitted,
         changeHandler: handleCityChanged,
     };

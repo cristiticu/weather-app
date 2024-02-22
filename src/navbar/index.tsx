@@ -10,13 +10,18 @@ import { useSuggestionHandling } from './service.ts'
  * @returns the component
  */
 export default function Navbar({ searchDisabled, onCitySubmitted, onLocate, onError }: NavbarProps) {
-    const {suggestions, submitHandler, changeHandler} = useSuggestionHandling(onCitySubmitted, onError);
+    const {suggestions, defaultSuggestion, submitHandler, changeHandler} = useSuggestionHandling(onCitySubmitted, onError);
+
+    function handleEnter(e){
+        if(e.key === 'Enter' && defaultSuggestion.current)
+            submitHandler(defaultSuggestion.current);
+    }
     
     return (
         <div className="navbar">
             <span className="title unselectable">weather.net</span>
             <div className="search-wrapper">
-                <input disabled={searchDisabled} id="citySearch" className="search-bar" type="search" placeholder="search your city" onChange={(e) => changeHandler(e)} />
+                <input disabled={searchDisabled} id="citySearch" className="search-bar" type="search" placeholder="search your city" onChange={changeHandler} onKeyUp={handleEnter} />
                 {suggestions &&
                 <div className="suggestions">
                     <ul>
@@ -26,9 +31,15 @@ export default function Navbar({ searchDisabled, onCitySubmitted, onLocate, onEr
                         </li>
                         {suggestions.length !== 0 ? (
                             suggestions.map((suggestion, index) => {
-                            if(suggestion)
+                                let buttonElement: JSX.Element;
+
+                                if(index === 0)
+                                    buttonElement = <button ref={defaultSuggestion} className="suggestion" value={index} onClick={(e) => submitHandler(e.target)}>{suggestion.name + ', ' + suggestion.country}</button>;
+                                else
+                                    buttonElement = <button className="suggestion" value={index} onClick={(e) => submitHandler(e.target)}>{suggestion.name + ', ' + suggestion.country}</button>;
+
                                 return (<li key={index}>
-                                        <button className="suggestion" value={index} onClick={(e) => submitHandler(e)}>{suggestion.name + ', ' + suggestion.country}</button>
+                                        {buttonElement}
                                         </li>);
                         })) : (
                             <li key={-2}>
