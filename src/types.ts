@@ -33,6 +33,7 @@ export type NavbarProps = {
 }
 
 export type MenuProps = {
+    selectedMenu: MenuOption,
     menuDisabled: boolean,
     onMenuChanged: (menu: MenuOption) => void,
 }

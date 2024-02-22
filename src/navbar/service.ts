@@ -64,6 +64,10 @@ export function useSuggestionHandling(onSubmit: Function, onError: Function){
             setSuggestions(null);
     }, 600);
 
+    function clearSuggestions(){
+        setSuggestions(null);
+    }
+
     // Function for handling city submissions
     function handleSuggestionSubmitted(e) {
         onSubmit(suggestions[e.value]);
@@ -73,6 +77,7 @@ export function useSuggestionHandling(onSubmit: Function, onError: Function){
     return {
         suggestions: suggestions,
         defaultSuggestion: defaultSuggestion,
+        clearSuggestions: clearSuggestions,
         submitHandler: handleSuggestionSubmitted,
         changeHandler: handleCityChanged,
     };

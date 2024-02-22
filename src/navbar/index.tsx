@@ -10,11 +10,16 @@ import { useSuggestionHandling } from './service.ts'
  * @returns the component
  */
 export default function Navbar({ searchDisabled, onCitySubmitted, onLocate, onError }: NavbarProps) {
-    const {suggestions, defaultSuggestion, submitHandler, changeHandler} = useSuggestionHandling(onCitySubmitted, onError);
+    const {suggestions, defaultSuggestion, clearSuggestions, submitHandler, changeHandler} = useSuggestionHandling(onCitySubmitted, onError);
 
     function handleEnter(e){
         if(e.key === 'Enter' && defaultSuggestion.current)
             submitHandler(defaultSuggestion.current);
+    }
+
+    function handleLocate(){
+        clearSuggestions();
+        onLocate();
     }
     
     return (
@@ -26,7 +31,7 @@ export default function Navbar({ searchDisabled, onCitySubmitted, onLocate, onEr
                 <div className="suggestions">
                     <ul>
                         <li key={-1}>
-                            <button onClick={onLocate} className="suggestion">locate me</button>
+                            <button onClick={handleLocate} className="suggestion">locate me</button>
                             <hr />
                         </li>
                         {suggestions.length !== 0 ? (
