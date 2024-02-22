@@ -9,8 +9,8 @@ import { useLocalizationNavigation, useStateNavigation } from "./service";
 const weatherTitles = ['asking the weather gods', 'checking the weather stone', 'looking out the window'];
 
 export default function Root(){
-    const {cityHandler, menuHandler} = useStateNavigation();
-    const localizationHandler = useLocalizationNavigation(cityHandler);
+    const {currentURL, cityHandler, menuHandler} = useStateNavigation();
+    const localizationHandler = useLocalizationNavigation(currentURL, cityHandler);
     const navigation = useNavigation();
 
     function handleError(error: Error){

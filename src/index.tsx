@@ -14,7 +14,7 @@ import { fetchData } from './weather/service.ts';
 const router = createBrowserRouter([
     {
         path: '',
-        element: <Navigate to='/weather' replace={true}/>
+        element: <Navigate to='/weather/' replace={true}/>
     },
     {
         path: '/',
