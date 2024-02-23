@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 
-import { SuggestionsState } from '../types.ts';
+import { SuggestionsState } from '../../types.ts';
 
 // Old suggestions URL using geonames.org. Too many problems, including wrong coordinates/city names.
 //const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=cluj-napoca&fuzzy=0.7&maxRows=4&username=nicko454g&featureClass=P');

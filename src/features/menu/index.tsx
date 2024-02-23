@@ -1,6 +1,6 @@
 import './menuselector.css';
 
-import { MenuProps } from '../types.ts';
+import { MenuProps } from '../../types.ts';
 
 export default function MenuSelector({ selectedMenu, menuDisabled, onMenuChanged }: MenuProps) {
     return (

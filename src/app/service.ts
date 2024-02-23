@@ -1,4 +1,4 @@
-import { MenuOption, WeatherSuggestion } from "./types.ts";
+import { MenuOption, WeatherSuggestion } from "../types.ts";
 
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
