@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 
 import { SuggestionsState } from '../../types.ts';
+import { store, api } from '../../app/store.ts';
 
 // Old suggestions URL using geonames.org. Too many problems, including wrong coordinates/city names.
 //const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=cluj-napoca&fuzzy=0.7&maxRows=4&username=nicko454g&featureClass=P');
@@ -8,7 +9,7 @@ import { SuggestionsState } from '../../types.ts';
 //const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=cluj-napoca&fuzzy=0.7&maxRows=4&username=nicko454g&featureCode=PPL');
 
 // New suggestions URL using geocoding by openweather. Will not give as many suggestions but it's more reliable
-const citySuggestionsURL = new URL('https://api.openweathermap.org/geo/1.0/direct?q=cluj-napoca&limit=3&appid=8eb16d0f89f9abb9566d44e84d13627f');
+// const citySuggestionsURL = new URL('https://api.openweathermap.org/geo/1.0/direct?q=cluj-napoca&limit=3&appid=8eb16d0f89f9abb9566d44e84d13627f');
 
 
 
@@ -43,25 +44,23 @@ export function useSuggestionHandling(onSubmit: Function, onError: Function){
 
     // Closure for handling the search of citites. When an user types, it won't fire the fetch immediately,
     // instead it will wait 600ms for input, reseting on each letter typed
-    const handleCityChanged = debounce((e) => {
-        citySuggestionsURL.searchParams.set('q', e.target.value);
+    const handleCityChanged = debounce(async (e) => {
+        if(e.target.value.length >= 3){
+            const coordinatesPromise = store.dispatch(api.endpoints.getCoordinates.initiate({city: e.target.value, limit: 3}));
+            coordinatesPromise.unsubscribe();
+            const {data: coordinateData} = await coordinatesPromise;
 
-        if(e.target.value.length >= 3)
-            fetch(citySuggestionsURL.toString())
-            .then((response) => response.json()
-            .then((newSuggestions) => {
-                setSuggestions(newSuggestions.map(newSuggestion => {
-                    return {name: newSuggestion.name.toLocaleLowerCase(), 
-                            country: newSuggestion.country.toLocaleLowerCase(), 
-                            coords: { lat: newSuggestion.lat, 
-                                      long: newSuggestion.lon
-                                    }
-                            };
-                }));
-            }))
-            .catch((error: Error) => onError(error));
+            setSuggestions(coordinateData.map(newSuggestion => {
+                return {name: newSuggestion.name.toLocaleLowerCase(), 
+                        country: newSuggestion.country.toLocaleLowerCase(), 
+                        coords: { lat: newSuggestion.lat, 
+                                    long: newSuggestion.lon
+                                }
+                        };
+            }));
+        }
         else
-            setSuggestions(null);
+            clearSuggestions();
     }, 600);
 
     function clearSuggestions(){
