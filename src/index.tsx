@@ -10,7 +10,8 @@ import { DefaultSection, ErrorSection } from './features/sections/index.tsx';
 
 
 import Root from './app/Root.tsx';
-import { api, store } from './app/store.ts';
+import { store } from './app/store.ts';
+import { api } from './features/api/apiSlice.ts';
 
 const router = createBrowserRouter([
     {

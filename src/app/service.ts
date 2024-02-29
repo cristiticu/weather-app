@@ -1,6 +1,6 @@
 import { MenuOption, WeatherSuggestion } from "../types.ts";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 
 
@@ -22,7 +22,7 @@ export function useStateNavigation(){
     }
 
     function handleMenuChanged(menu: MenuOption){
-        navigate(`/${menu}/${currentCity}`);
+        navigate(`/${menu}/${currentCity}`, {replace: true});
     }
 
     return {
@@ -39,6 +39,8 @@ export function useStateNavigation(){
  * @returns localization handler to be called whenever
  */
 export function useLocalizationNavigation(currentURL: string, cityHandler: Function){
+    const [isLocalizing, setLocalizing] = useState(false);
+
      useEffect(() => {
         if(!currentURL.split('/')[2]){
             console.log('debug: localizing');
@@ -48,6 +50,8 @@ export function useLocalizationNavigation(currentURL: string, cityHandler: Funct
 
     function handleLocalization(){
         async function onSucces(position: GeolocationPosition){
+            setLocalizing(false);
+
             const response = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${position.coords.latitude}&lon=${position.coords.longitude}&limit=1&appid=8eb16d0f89f9abb9566d44e84d13627f`);
             const fetchedCity = await response.json();
             
@@ -56,11 +60,16 @@ export function useLocalizationNavigation(currentURL: string, cityHandler: Funct
         }
 
         function onError(error: GeolocationPositionError){
+            setLocalizing(false);
             console.error(error);
         }
         
+        setLocalizing(true);
         navigator.geolocation.getCurrentPosition(onSucces, onError);
     }
 
-    return handleLocalization;
+    return {
+        localizationHandler: handleLocalization,
+        isLocalizing: isLocalizing,
+    };
 }

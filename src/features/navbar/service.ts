@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 
 import { SuggestionsState } from '../../types.ts';
-import { store, api } from '../../app/store.ts';
+import { useLazyGetCoordinatesQuery } from '../api/apiSlice.ts';
 
 // Old suggestions URL using geonames.org. Too many problems, including wrong coordinates/city names.
 //const citySuggestionsURL = new URL('https://secure.geonames.org/searchJSON?q=cluj-napoca&fuzzy=0.7&maxRows=4&username=nicko454g&featureClass=P');
@@ -39,6 +39,8 @@ function debounce(toDebounce: Function, time: number = 600) {
  */
 export function useSuggestionHandling(onSubmit: Function, onError: Function){
     const [suggestions, setSuggestions]: SuggestionsState = useState(null);
+    const [error, setError] = useState('');
+    const [coordinateTrigger] = useLazyGetCoordinatesQuery();
     const defaultSuggestion = useRef(null);
 
 
@@ -46,18 +48,22 @@ export function useSuggestionHandling(onSubmit: Function, onError: Function){
     // instead it will wait 600ms for input, reseting on each letter typed
     const handleCityChanged = debounce(async (e) => {
         if(e.target.value.length >= 3){
-            const coordinatesPromise = store.dispatch(api.endpoints.getCoordinates.initiate({city: e.target.value, limit: 3}));
-            coordinatesPromise.unsubscribe();
-            const {data: coordinateData} = await coordinatesPromise;
+            try{
+                const {data: coordinateData} = await coordinateTrigger({city: e.target.value, limit: 3}, true);
 
-            setSuggestions(coordinateData.map(newSuggestion => {
-                return {name: newSuggestion.name.toLocaleLowerCase(), 
-                        country: newSuggestion.country.toLocaleLowerCase(), 
-                        coords: { lat: newSuggestion.lat, 
-                                    long: newSuggestion.lon
-                                }
-                        };
-            }));
+                setSuggestions(coordinateData.map(newSuggestion => {
+                    return {name: newSuggestion.name.toLocaleLowerCase(), 
+                            country: newSuggestion.country.toLocaleLowerCase(), 
+                            coords: { lat: newSuggestion.lat, 
+                                        long: newSuggestion.lon
+                                    }
+                            };
+                }));
+                setError('');
+            }
+            catch(error){
+                setError('network error. could not fetch');
+            }
         }
         else
             clearSuggestions();
@@ -76,6 +82,7 @@ export function useSuggestionHandling(onSubmit: Function, onError: Function){
     return {
         suggestions: suggestions,
         defaultSuggestion: defaultSuggestion,
+        suggestionError: error,
         clearSuggestions: clearSuggestions,
         submitHandler: handleSuggestionSubmitted,
         changeHandler: handleCityChanged,

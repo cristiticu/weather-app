@@ -11,8 +11,10 @@ const weatherTitles = ['asking the weather gods', 'checking the weather stone', 
 
 export default function Root(){
     const {currentURL, cityHandler, menuHandler} = useStateNavigation();
-    const localizationHandler = useLocalizationNavigation(currentURL, cityHandler);
+    const {localizationHandler, isLocalizing} = useLocalizationNavigation(currentURL, cityHandler);
     const navigation = useNavigation();
+
+    const isSomethingLoading = (navigation.state === 'loading' || isLocalizing);
 
     function handleError(error: Error){
         throw new Error(error.message);
@@ -29,9 +31,9 @@ export default function Root(){
                           menuDisabled={navigation.state === 'loading'}
                           onMenuChanged={menuHandler} />
 
-            {navigation.state === 'loading' && <LoaderSection message={weatherTitles[Math.floor(Math.random() * 3)]}/>}
+            {isSomethingLoading && <LoaderSection message={weatherTitles[Math.floor(Math.random() * 3)]}/>}
 
-            {navigation.state === 'idle' && <Outlet />}
+            {!isSomethingLoading && <Outlet />}
         </>
     );
 }

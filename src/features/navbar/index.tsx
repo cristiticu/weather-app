@@ -10,7 +10,7 @@ import { useSuggestionHandling } from './service.ts'
  * @returns the component
  */
 export default function Navbar({ searchDisabled, onCitySubmitted, onLocate, onError }: NavbarProps) {
-    const {suggestions, defaultSuggestion, clearSuggestions, submitHandler, changeHandler} = useSuggestionHandling(onCitySubmitted, onError);
+    const {suggestions, defaultSuggestion, suggestionError, clearSuggestions, submitHandler, changeHandler} = useSuggestionHandling(onCitySubmitted, onError);
 
     function handleEnter(e){
         if(e.key === 'Enter' && defaultSuggestion.current)
@@ -21,6 +21,8 @@ export default function Navbar({ searchDisabled, onCitySubmitted, onLocate, onEr
         clearSuggestions();
         onLocate();
     }
+
+    console.log(suggestionError);
     
     return (
         <div className="navbar">
@@ -30,7 +32,8 @@ export default function Navbar({ searchDisabled, onCitySubmitted, onLocate, onEr
                 {suggestions &&
                 <div className="suggestions">
                     <ul>
-                        <li key={-1}>
+                        {suggestionError && <li key={-1}>{suggestionError}</li>}
+                        <li key={-2}>
                             <button onClick={handleLocate} className="suggestion">locate me</button>
                             <hr />
                         </li>
@@ -43,11 +46,13 @@ export default function Navbar({ searchDisabled, onCitySubmitted, onLocate, onEr
                                 else
                                     buttonElement = <button className="suggestion" value={index} onClick={(e) => submitHandler(e.target)}>{suggestion.name + ', ' + suggestion.country}</button>;
 
-                                return (<li key={index}>
+                                return (
+                                    <li key={index}>
                                         {buttonElement}
-                                        </li>);
+                                    </li>
+                                );
                         })) : (
-                            <li key={-2}>
+                            <li key={-3}>
                                 <span>no suggestions! try something else</span>
                             </li>
                         )}
