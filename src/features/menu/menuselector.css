@@ -1,52 +1,52 @@
 .weather-menu {
-    z-index: 0;
-    box-sizing: border-box;
-    display: flex;
+	z-index: 0;
+	box-sizing: border-box;
+	display: flex;
 
-    justify-content: center;
+	justify-content: center;
 
-    padding: 8px;
+	padding: 8px;
 
-    background-color: rgb(60, 60, 60);
+	background-color: rgb(60, 60, 60);
 }
 
 .menu-button {
-    padding: 2px;
-    margin: 2px;
+	padding: 2px;
+	margin: 2px;
 
-    background-color:#e2ddd7;
-    color: rgb(41, 41, 41);
+	background-color: #e2ddd7;
+	color: rgb(41, 41, 41);
 
-    border-radius: 2px;
+	border-radius: 2px;
 
-    font-size: 1.2em;
+	font-size: 1.2em;
 
-    padding: 8px;
-    
-    appearance: none;
-    -webkit-appearance: none; 
+	padding: 8px;
+
+	appearance: none;
+	-webkit-appearance: none;
 }
 
 .menu-button:disabled,
 .menu-button[disabled],
 .selected {
-    background-color:#98928e;
+	background-color: #98928e;
 }
 
 /* WIDE SCREEN */
-@media only screen and (min-width: 1024px){
-    .weather-menu{
-        position: absolute;
-        display: inline-grid;
+@media only screen and (min-width: 1024px) {
+	.weather-menu {
+		position: absolute;
+		display: inline-grid;
 
-        left: 0;
+		left: 0;
 
-        padding: 12px;
+		padding: 12px;
 
-        border-radius: 0 0 8px 0;
-    }
+		border-radius: 0 0 8px 0;
+	}
 
-    .menu-button {
-        font-size: 2em;
-    }
+	.menu-button {
+		font-size: 2em;
+	}
 }

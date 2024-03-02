@@ -1,9 +1,9 @@
 {
-    "compilerOptions": {
-      "experimentalDecorators": true,
-      "jsx":"react-jsx",
-      "lib":["ES2018", "DOM"],
-      "allowImportingTsExtensions": true,
-      "noEmit": true,
-    }
-  }
+	"compilerOptions": {
+		"experimentalDecorators": true,
+		"jsx": "react-jsx",
+		"lib": ["ES2018", "DOM"],
+		"allowImportingTsExtensions": true,
+		"noEmit": true
+	}
+}

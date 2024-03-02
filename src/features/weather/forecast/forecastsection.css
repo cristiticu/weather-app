@@ -1,51 +1,51 @@
 .forecast {
-    list-style-type: none;
-    white-space:nowrap;
-    overflow-x: scroll;
-    width: 70vw;
+	list-style-type: none;
+	white-space: nowrap;
+	overflow-x: scroll;
+	width: 70vw;
 
-    margin-top: 4vh;
+	margin-top: 4vh;
 }
 
 .forecastElement {
-    display:inline;
-    padding: 2px;
-    font-size: 1.1em;
+	display: inline;
+	padding: 2px;
+	font-size: 1.1em;
 }
 
 .forecastElement ul {
-    list-style: none;
-    align-items: center;
-    display: inline-grid;
+	list-style: none;
+	align-items: center;
+	display: inline-grid;
 }
 
 .forecastElement li {
-    text-align: center;
+	text-align: center;
 }
 
 .weekday {
-    padding: 2px;
-    margin: 2px;
+	padding: 2px;
+	margin: 2px;
 
-    font-size: 1em;
-    float: left;
+	font-size: 1em;
+	float: left;
 
-    background-color:#e2ddd7;
-    color: rgb(41, 41, 41);
+	background-color: #e2ddd7;
+	color: rgb(41, 41, 41);
 
-    border-radius: 4px;
-    
-    appearance: none;
-    -webkit-appearance: none; 
+	border-radius: 4px;
+
+	appearance: none;
+	-webkit-appearance: none;
 }
 
 /* WIDE SCREEN */
-@media only screen and (min-width: 1024px){
-    .forecast {
-        width: 40vw;
-    }
+@media only screen and (min-width: 1024px) {
+	.forecast {
+		width: 40vw;
+	}
 
-    .forecastElement {
-        padding: 12px;
-    }
+	.forecastElement {
+		padding: 12px;
+	}
 }

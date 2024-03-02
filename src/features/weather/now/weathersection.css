@@ -1,16 +1,15 @@
 .weather-list {
-    list-style: none;
-    
-    padding-top: 12px;
-    padding-left: 28px;
+	list-style: none;
+
+	padding-top: 12px;
+	padding-left: 28px;
 }
 
 .weather-data {
-    display: flex;
-    align-items: center;
+	display: flex;
+	align-items: center;
 }
 
 .important-data {
-    font-size: 3em;
+	font-size: 3em;
 }
-

@@ -1,37 +1,36 @@
 .section {
-    display: inline-block;
-    box-sizing: border-box;
+	display: inline-block;
+	box-sizing: border-box;
 
-    padding: 18px;
-    margin: 30px;
-    border-color: rgb(41, 41, 41);
-    border-radius: 10px;
-    border-style: solid;
-    border-width: thick;
+	padding: 18px;
+	margin: 30px;
+	border-color: rgb(41, 41, 41);
+	border-radius: 10px;
+	border-style: solid;
+	border-width: thick;
 
-    font-size: 1.3em;
-    color:rgb(55, 55, 55)
+	font-size: 1.3em;
+	color: rgb(55, 55, 55);
 }
 
 .error {
-    border-color: rgb(247, 114, 114);
+	border-color: rgb(247, 114, 114);
 }
 
 .loading {
-    border-color: rgb(137, 137, 137)
+	border-color: rgb(137, 137, 137);
 }
 
 .section-title {
-    font-size: 1.3em;
+	font-size: 1.3em;
 }
 
-
 /* WIDE SCREEN */
-@media only screen and (min-width: 1024px){
-    .section {
-        padding: 36px;
-        margin-left: 30vw;
+@media only screen and (min-width: 1024px) {
+	.section {
+		padding: 36px;
+		margin-left: 30vw;
 
-        font-size: 1.5em;
-    }
+		font-size: 1.5em;
+	}
 }

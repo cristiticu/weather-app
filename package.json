@@ -1,27 +1,27 @@
 {
-  "name": "weatherappv2",
-  "version": "1.0.0",
-  "description": "Weather App, using React",
-  "author": "Cristian Ticu",
-  "license": "MIT",
-  "private": true,
-  "scripts": {
-    "build": "npx parcel build --no-source-maps ./src/index.html && cp ./_redirects ./dist/_redirects",
-    "run": "npx parcel build ./src/index.html && npx parcel serve ./src/index.html",
-    "start": "npx parcel serve ./src/index.html"
-  },
-  "dependencies": {
-    "@reduxjs/toolkit": "^2.2.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-redux": "^9.1.0"
-  },
-  "devDependencies": {
-    "@types/react": "^18.2.48",
-    "@types/react-dom": "^18.2.18",
-    "parcel": "^2.11.0",
-    "process": "^0.11.10",
-    "react-router-dom": "^6.22.1",
-    "typescript": "^5.3.3"
-  }
+	"name": "weatherappv2",
+	"version": "1.0.0",
+	"description": "Weather App, using React",
+	"author": "Cristian Ticu",
+	"license": "MIT",
+	"private": true,
+	"scripts": {
+		"build": "npx parcel build --no-source-maps ./src/index.html && cp ./_redirects ./dist/_redirects",
+		"run": "npx parcel build ./src/index.html && npx parcel serve ./src/index.html",
+		"start": "npx parcel serve ./src/index.html"
+	},
+	"dependencies": {
+		"@reduxjs/toolkit": "^2.2.1",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"react-redux": "^9.1.0"
+	},
+	"devDependencies": {
+		"@types/react": "^18.2.48",
+		"@types/react-dom": "^18.2.18",
+		"parcel": "^2.11.0",
+		"process": "^0.11.10",
+		"react-router-dom": "^6.22.1",
+		"typescript": "^5.3.3"
+	}
 }

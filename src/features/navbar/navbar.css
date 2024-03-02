@@ -1,87 +1,87 @@
 .navbar {
-    padding-top: 1vh;
-    padding-bottom: 1vh;
+	padding-top: 1vh;
+	padding-bottom: 1vh;
 
-    background-color: rgb(41, 41, 41);
-    color: #e2ddd7;
+	background-color: rgb(41, 41, 41);
+	color: #e2ddd7;
 }
 
 .title {
-    padding-left: 8vw;
+	padding-left: 8vw;
 
-    font-weight: 600;
-    font-size: 2.5em;
+	font-weight: 600;
+	font-size: 2.5em;
 }
 
 .search-wrapper {
-    position: relative;
-    display: inline-block;
+	position: relative;
+	display: inline-block;
 }
 
 .search-bar {
-    margin-left: 7vw;
+	margin-left: 7vw;
 
-    width: 100%;
+	width: 100%;
 
-    font-size: 1.5em;
+	font-size: 1.5em;
 }
 
 .suggestions {
-    box-sizing: border-box;
-    position: absolute;
-    z-index: 2;
+	box-sizing: border-box;
+	position: absolute;
+	z-index: 2;
 
-    left: 7vw;
+	left: 7vw;
 
-    padding: 4px;
-    margin-top: 1px;
-    border-radius: 4px;
+	padding: 4px;
+	margin-top: 1px;
+	border-radius: 4px;
 
-    background-color: rgb(41, 41, 41);
+	background-color: rgb(41, 41, 41);
 }
 
 .suggestion {
-    padding: 2px;
-    margin: 2px;
+	padding: 2px;
+	margin: 2px;
 
-    font-size: 1.7em;
+	font-size: 1.7em;
 
-    background-color:#e2ddd7;
-    color: rgb(41, 41, 41);
+	background-color: #e2ddd7;
+	color: rgb(41, 41, 41);
 
-    border-radius: 2px;
-    
-    appearance: none;
-    -webkit-appearance: none; 
+	border-radius: 2px;
+
+	appearance: none;
+	-webkit-appearance: none;
 }
 
 .suggestions ul {
-    list-style: none;
+	list-style: none;
 }
 
 /* WIDE SCREEN */
-@media only screen and (min-width: 1024px){
-    .navbar {
-        padding: 0;
-    }
+@media only screen and (min-width: 1024px) {
+	.navbar {
+		padding: 0;
+	}
 
-    .title {
-        padding-left: 4vw;
-        margin-right: 39.5vw;
+	.title {
+		padding-left: 4vw;
+		margin-right: 39.5vw;
 
-        font-size: 4em;
-    }
+		font-size: 4em;
+	}
 
-    .search-bar {
-        font-size: 1.1em;
-        margin-left: 0;
-    }
+	.search-bar {
+		font-size: 1.1em;
+		margin-left: 0;
+	}
 
-    .suggestions {
-        left: 0%;
-    }
+	.suggestions {
+		left: 0%;
+	}
 
-    .suggestion {
-        font-size: 1.2em;
-    }
+	.suggestion {
+		font-size: 1.2em;
+	}
 }
